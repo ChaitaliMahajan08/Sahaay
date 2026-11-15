@@ -108,7 +108,8 @@ English is the complete base; other languages fall back to English for any missi
 Requires **Node.js 22+**.
 
 ```sh
-cd /home/capsicle/clinehack
+git clone https://github.com/ChaitaliMahajan08/Sahaay.git
+cd Sahaay
 npm install
 cp .env.example .env.local
 # Edit .env.local — see sections below
@@ -233,37 +234,37 @@ Browser (React / Next.js app router)
 
 | File | Lines | Responsibility |
 |---|---|---|
-| [`app/page.tsx`](file:///home/capsicle/clinehack/app/page.tsx) | 639 | Single-page client: auth flow, profile form, chat, result cards, account menu, settings modal |
-| [`app/verify/page.tsx`](file:///home/capsicle/clinehack/app/verify/page.tsx) | 110 | Email verification landing (`/verify?token=…`) |
-| [`app/layout.tsx`](file:///home/capsicle/clinehack/app/layout.tsx) | — | Root layout, viewport meta, PWA manifest link |
-| [`app/manifest.ts`](file:///home/capsicle/clinehack/app/manifest.ts) | — | Web app manifest (name, icons, shortcuts, display mode) |
-| [`app/api/chat/route.ts`](file:///home/capsicle/clinehack/app/api/chat/route.ts) | — | Concurrency cap (4), same-origin, body limit (64 KB), Zod parse, delegates to `lib/chat.ts` |
-| [`app/api/auth/register/route.ts`](file:///home/capsicle/clinehack/app/api/auth/register/route.ts) | 36 | Creates user + profile row, issues verification token, calls email sender |
-| [`app/api/auth/login/route.ts`](file:///home/capsicle/clinehack/app/api/auth/login/route.ts) | 35 | Constant-time password check, verification gate, issues session cookie |
-| [`app/api/auth/logout/route.ts`](file:///home/capsicle/clinehack/app/api/auth/logout/route.ts) | — | Deletes session token, clears cookie |
-| [`app/api/auth/verify/route.ts`](file:///home/capsicle/clinehack/app/api/auth/verify/route.ts) | 46 | Consumes (single-use) token hash, marks user verified. Accepts POST (from UI) and GET (from email link) |
-| [`app/api/auth/resend/route.ts`](file:///home/capsicle/clinehack/app/api/auth/resend/route.ts) | 34 | Generic response (no account enumeration), issues new token if unverified account exists |
-| [`app/api/auth/session/route.ts`](file:///home/capsicle/clinehack/app/api/auth/session/route.ts) | — | Session check on page load |
-| [`app/api/auth/password/route.ts`](file:///home/capsicle/clinehack/app/api/auth/password/route.ts) | — | Re-authenticates current password, updates hash, signs out all other sessions |
-| [`app/api/profile/route.ts`](file:///home/capsicle/clinehack/app/api/profile/route.ts) | — | GET returns profile + language; PUT upserts; requires session |
-| [`app/api/applications/route.ts`](file:///home/capsicle/clinehack/app/api/applications/route.ts) | — | GET list, PUT upsert, DELETE; scheme IDs validated against catalog |
-| [`app/api/account/route.ts`](file:///home/capsicle/clinehack/app/api/account/route.ts) | — | PUT display name; requires session |
-| [`app/api/location/route.ts`](file:///home/capsicle/clinehack/app/api/location/route.ts) | — | Reverse-geocodes lat/lon via Nominatim; falls back to ipapi.co IP lookup |
-| [`lib/chat.ts`](file:///home/capsicle/clinehack/lib/chat.ts) | 57 | Cline SDK agent (live) or demo path; 5 domain tools; 45s timeout; result cards recomputed in code |
-| [`lib/eligibility.ts`](file:///home/capsicle/clinehack/lib/eligibility.ts) | 57 | `matchSchemes()` evaluates every rule; `getMissingFields()` tracks unknowns; sorts eligible → likely → not |
-| [`lib/auth.ts`](file:///home/capsicle/clinehack/lib/auth.ts) | 147 | scrypt passwords, 256-bit session tokens, SHA-256 email verification tokens, timing-safe compare |
-| [`lib/email.ts`](file:///home/capsicle/clinehack/lib/email.ts) | ~110 | Nodemailer SMTP transporter; HTML email template; falls back to dev-link if unconfigured |
-| [`lib/db.ts`](file:///home/capsicle/clinehack/lib/db.ts) | 71 | `node:sqlite`; WAL mode; 5 tables + index; additive idempotent migration |
-| [`lib/i18n.ts`](file:///home/capsicle/clinehack/lib/i18n.ts) | 302 | 8 language dictionaries; English-fallback merge; BCP-47 speech locales |
-| [`lib/location.ts`](file:///home/capsicle/clinehack/lib/location.ts) | 119 | GPS → Nominatim → IP → centroid chain; state normalization + alias map; offline fallback |
-| [`lib/validation.ts`](file:///home/capsicle/clinehack/lib/validation.ts) | 58 | Zod schemas for every API surface: profile, chat, register, login, verify, resend, application, account, password |
-| [`lib/api.ts`](file:///home/capsicle/clinehack/lib/api.ts) | 39 | `sameOrigin()`, `readJsonBody()` (byte-counted, not Content-Length trusted), `throttle()` (in-process per-key) |
-| [`lib/text.ts`](file:///home/capsicle/clinehack/lib/text.ts) | 22 | `plainText()` strips markdown, emoji, headings, fences — even if the model disobeys prompt rules |
-| [`lib/contracts.ts`](file:///home/capsicle/clinehack/lib/contracts.ts) | 98 | Shared TypeScript types: `Profile`, `Scheme`, `Rule`, `Match`, `ChatResponse`, auth response shapes |
-| [`data/schemes.json`](file:///home/capsicle/clinehack/data/schemes.json) | — | 31-scheme catalog; machine-readable rules; official gov.in/nic.in source URLs |
-| [`scripts/validate-data.ts`](file:///home/capsicle/clinehack/scripts/validate-data.ts) | 67 | Structural + domain validation: required fields, ID uniqueness, HTTPS gov domain, rule type safety, date format |
-| [`public/sw.js`](file:///home/capsicle/clinehack/public/sw.js) | — | Service worker: precaches app shell, never caches `/api/` responses |
-| [`tests/`](file:///home/capsicle/clinehack/tests) | — | Node test runner; no paid API calls |
+| [`app/page.tsx`](app/page.tsx) | 639 | Single-page client: auth flow, profile form, chat, result cards, account menu, settings modal |
+| [`app/verify/page.tsx`](app/verify/page.tsx) | 110 | Email verification landing (`/verify?token=…`) |
+| [`app/layout.tsx`](app/layout.tsx) | — | Root layout, viewport meta, PWA manifest link |
+| [`app/manifest.ts`](app/manifest.ts) | — | Web app manifest (name, icons, shortcuts, display mode) |
+| [`app/api/chat/route.ts`](app/api/chat/route.ts) | — | Concurrency cap (4), same-origin, body limit (64 KB), Zod parse, delegates to `lib/chat.ts` |
+| [`app/api/auth/register/route.ts`](app/api/auth/register/route.ts) | 36 | Creates user + profile row, issues verification token, calls email sender |
+| [`app/api/auth/login/route.ts`](app/api/auth/login/route.ts) | 35 | Constant-time password check, verification gate, issues session cookie |
+| [`app/api/auth/logout/route.ts`](app/api/auth/logout/route.ts) | — | Deletes session token, clears cookie |
+| [`app/api/auth/verify/route.ts`](app/api/auth/verify/route.ts) | 46 | Consumes (single-use) token hash, marks user verified. Accepts POST (from UI) and GET (from email link) |
+| [`app/api/auth/resend/route.ts`](app/api/auth/resend/route.ts) | 34 | Generic response (no account enumeration), issues new token if unverified account exists |
+| [`app/api/auth/session/route.ts`](app/api/auth/session/route.ts) | — | Session check on page load |
+| [`app/api/auth/password/route.ts`](app/api/auth/password/route.ts) | — | Re-authenticates current password, updates hash, signs out all other sessions |
+| [`app/api/profile/route.ts`](app/api/profile/route.ts) | — | GET returns profile + language; PUT upserts; requires session |
+| [`app/api/applications/route.ts`](app/api/applications/route.ts) | — | GET list, PUT upsert, DELETE; scheme IDs validated against catalog |
+| [`app/api/account/route.ts`](app/api/account/route.ts) | — | PUT display name; requires session |
+| [`app/api/location/route.ts`](app/api/location/route.ts) | — | Reverse-geocodes lat/lon via Nominatim; falls back to ipapi.co IP lookup |
+| [`lib/chat.ts`](lib/chat.ts) | 57 | Cline SDK agent (live) or demo path; 5 domain tools; 45s timeout; result cards recomputed in code |
+| [`lib/eligibility.ts`](lib/eligibility.ts) | 57 | `matchSchemes()` evaluates every rule; `getMissingFields()` tracks unknowns; sorts eligible → likely → not |
+| [`lib/auth.ts`](lib/auth.ts) | 147 | scrypt passwords, 256-bit session tokens, SHA-256 email verification tokens, timing-safe compare |
+| [`lib/email.ts`](lib/email.ts) | ~110 | Nodemailer SMTP transporter; HTML email template; falls back to dev-link if unconfigured |
+| [`lib/db.ts`](lib/db.ts) | 71 | `node:sqlite`; WAL mode; 5 tables + index; additive idempotent migration |
+| [`lib/i18n.ts`](lib/i18n.ts) | 302 | 8 language dictionaries; English-fallback merge; BCP-47 speech locales |
+| [`lib/location.ts`](lib/location.ts) | 119 | GPS → Nominatim → IP → centroid chain; state normalization + alias map; offline fallback |
+| [`lib/validation.ts`](lib/validation.ts) | 58 | Zod schemas for every API surface: profile, chat, register, login, verify, resend, application, account, password |
+| [`lib/api.ts`](lib/api.ts) | 39 | `sameOrigin()`, `readJsonBody()` (byte-counted, not Content-Length trusted), `throttle()` (in-process per-key) |
+| [`lib/text.ts`](lib/text.ts) | 22 | `plainText()` strips markdown, emoji, headings, fences — even if the model disobeys prompt rules |
+| [`lib/contracts.ts`](lib/contracts.ts) | 98 | Shared TypeScript types: `Profile`, `Scheme`, `Rule`, `Match`, `ChatResponse`, auth response shapes |
+| [`data/schemes.json`](data/schemes.json) | — | 31-scheme catalog; machine-readable rules; official gov.in/nic.in source URLs |
+| [`scripts/validate-data.ts`](scripts/validate-data.ts) | 67 | Structural + domain validation: required fields, ID uniqueness, HTTPS gov domain, rule type safety, date format |
+| [`public/sw.js`](public/sw.js) | — | Service worker: precaches app shell, never caches `/api/` responses |
+| [`tests/`](tests) | — | Node test runner; no paid API calls |
 
 ---
 
@@ -307,13 +308,13 @@ Results are sorted: eligible → likely → not eligible, then by score descendi
 
 ### Adding a new scheme
 
-Add a JSON object to `data/schemes.json` following the `Scheme` contract in [`lib/contracts.ts`](file:///home/capsicle/clinehack/lib/contracts.ts). Run `npm run validate:data` to catch structural errors. The engine picks it up immediately — no code changes needed.
+Add a JSON object to `data/schemes.json` following the `Scheme` contract in [`lib/contracts.ts`](lib/contracts.ts). Run `npm run validate:data` to catch structural errors. The engine picks it up immediately — no code changes needed.
 
 ---
 
 ## AI Agent (Live Mode)
 
-In live mode, [`lib/chat.ts`](file:///home/capsicle/clinehack/lib/chat.ts) creates a fresh, request-scoped Cline SDK agent with exactly **5 domain tools**:
+In live mode, [`lib/chat.ts`](lib/chat.ts) creates a fresh, request-scoped Cline SDK agent with exactly **5 domain tools**:
 
 | Tool | What it does |
 |---|---|
@@ -454,8 +455,8 @@ Sahaay is installable as a Progressive Web App:
 
 ## Adding a Language
 
-1. Add the new code to `LANGUAGE_CODES` in [`lib/contracts.ts`](file:///home/capsicle/clinehack/lib/contracts.ts)
-2. Add the language metadata (native name, BCP-47 speech locale) to `LANGUAGES` in [`lib/i18n.ts`](file:///home/capsicle/clinehack/lib/i18n.ts)
+1. Add the new code to `LANGUAGE_CODES` in [`lib/contracts.ts`](lib/contracts.ts)
+2. Add the language metadata (native name, BCP-47 speech locale) to `LANGUAGES` in [`lib/i18n.ts`](lib/i18n.ts)
 3. Add a `Partial<Labels>` dictionary in `lib/i18n.ts` (any missing key falls back to English)
 4. Add it to the `dictionaries` map at the bottom of `lib/i18n.ts`
 
@@ -465,7 +466,7 @@ No other code changes are needed. The language switcher, Zod enum, and AI system
 
 ## Extending the Scheme Catalog
 
-Add an entry to [`data/schemes.json`](file:///home/capsicle/clinehack/data/schemes.json) following the `Scheme` type in `lib/contracts.ts`:
+Add an entry to [`data/schemes.json`](data/schemes.json) following the `Scheme` type in `lib/contracts.ts`:
 
 ```jsonc
 {
