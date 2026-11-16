@@ -85,6 +85,7 @@ export default function Home() {
   // Email-verification hand-off (after sign-up or a blocked sign-in).
   const [pendingEmail, setPendingEmail] = useState('');
   const [verifyNote, setVerifyNote] = useState('');
+  const [devLink, setDevLink] = useState<string | null>(null);
   const [resendBusy, setResendBusy] = useState(false);
 
   const request = useRef<AbortController | null>(null);
@@ -228,6 +229,7 @@ export default function Home() {
         // Registration always returns 200 + verification_required (no session yet).
         if (!res.ok) throw new Error(message ?? t.authError);
         setPendingEmail(authEmail.trim().toLowerCase());
+        setDevLink(typeof obj.devLink === 'string' ? obj.devLink : null);
         setAuthView('verify');
         setAuthPassword('');
         return;
@@ -237,6 +239,7 @@ export default function Home() {
         // Correct password but unverified address → hand off to the verify screen.
         if (obj.needsVerification === true) {
           setPendingEmail(authEmail.trim().toLowerCase());
+          setDevLink(null);
           setVerifyNote(tri(language, 'Please verify your email to continue.', 'जारी रखने के लिए अपना ईमेल सत्यापित करें।', 'కొనసాగించడానికి మీ ఇమెయిల్‌ను ధృవీకరించండి.'));
           setAuthView('verify');
           setAuthPassword('');
@@ -262,6 +265,7 @@ export default function Home() {
       const data: unknown = await res.json().catch(() => null);
       const obj = data && typeof data === 'object' ? data as Record<string, unknown> : {};
       if (!res.ok) throw new Error(typeof obj.error === 'string' ? obj.error : t.authError);
+      if (typeof obj.devLink === 'string') setDevLink(obj.devLink);
       setVerifyNote(tri(language, 'A new verification link is on its way.', 'एक नया सत्यापन लिंक भेजा गया है।', 'కొత్త ధృవీకరణ లింక్ పంపబడింది.'));
     }
     catch (cause) { setAuthError(cause instanceof Error ? cause.message : t.authError); }
@@ -275,7 +279,7 @@ export default function Home() {
     setProfile({}); setMatches([]); setTrace([]); setMessages([]); setText('');
     setSearched(false); setSaveState('idle'); setError(''); setFilter('all');
     setAppliedList({}); setSettingsOpen(false);
-    setAuthView('signin'); setAuthError(''); setVerifyNote('');
+    setAuthView('signin'); setAuthError(''); setVerifyNote(''); setDevLink(null);
   }
 
   /** Track a scheme as saved/applied on the account; toggles off if already set. */
@@ -437,8 +441,19 @@ export default function Home() {
               <p className="verify-email">{pendingEmail}</p>
               {verifyNote && <p className="account-sync"><Icon name="check" size={12}/>{verifyNote}</p>}
               {authError && <p className="auth-error" role="alert">{authError}</p>}
+              {devLink && (
+                <div style={{ margin: '14px 0', padding: '12px', background: 'rgba(231,178,96,0.1)', border: '1px solid rgba(231,178,96,0.3)', borderRadius: '10px', textAlign: 'center' }}>
+                  <p style={{ margin: '0 0 8px', fontSize: '13px', color: '#e7b260', fontWeight: 600 }}>Development Mode Verification</p>
+                  <a
+                    href={devLink}
+                    style={{ display: 'inline-block', background: '#e7b260', color: '#111', fontWeight: 600, fontSize: '13px', padding: '8px 16px', borderRadius: '6px', textDecoration: 'none' }}
+                  >
+                    Click to Verify Instantly →
+                  </a>
+                </div>
+              )}
               <button type="button" className="auth-submit" disabled={resendBusy} onClick={() => void resendVerification()}><Icon name="refresh" size={14}/>{resendBusy ? t.saving : tri(language, 'Resend email', 'ईमेल पुनः भेजें', 'ఇమెయిల్ మళ్లీ పంపండి')}</button>
-              <button type="button" className="auth-guest" onClick={() => { setAuthView('signin'); setAuthError(''); setVerifyNote(''); }}>← {t.signIn}</button>
+              <button type="button" className="auth-guest" onClick={() => { setAuthView('signin'); setAuthError(''); setVerifyNote(''); setDevLink(null); }}>← {t.signIn}</button>
               <p className="auth-note"><Icon name="lock" size={12}/>{tri(language, 'Check your inbox and spam folder for the verification link.', 'अपने इनबॉक्स और स्पैम फ़ोल्डर में सत्यापन लिंक देखें।', 'ధృవీకరణ లింక్ కోసం మీ ఇన్‌బాక్స్ మరియు స్పామ్ ఫోల్డర్ తనిఖీ చేయండి.')}</p>
             </div>
           )}

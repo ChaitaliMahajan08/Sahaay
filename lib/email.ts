@@ -48,6 +48,7 @@ function buildTransporter() {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
   if (!host || !user || !pass) return null;
+  if (user === 'your@gmail.com' || pass === 'your-16-char-app-password') return null;
 
   const port = Number(process.env.SMTP_PORT ?? 587);
   // Gmail App Passwords are displayed with spaces ("abcd efgh ijkl mnop") but
