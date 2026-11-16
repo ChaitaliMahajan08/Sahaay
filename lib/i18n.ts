@@ -10,6 +10,7 @@ export const LANGUAGES: LanguageMeta[] = [
   { code: 'mr', name: 'Marathi', native: 'मराठी', speechLocale: 'mr-IN' },
   { code: 'bn', name: 'Bengali', native: 'বাংলা', speechLocale: 'bn-IN' },
   { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી', speechLocale: 'gu-IN' },
+  { code: 'pa', name: 'Punjabi', native: 'ਪੰਜਾਬੀ', speechLocale: 'pa-IN' },
 ];
 
 /** Every user-facing string. English is complete; others may fall back to it. */
@@ -284,7 +285,46 @@ const gu: Partial<Labels> = {
   install: 'એપ ઇન્સ્ટોલ કરો', installHint: 'ઝડપી, ઑફલાઇન ઉપયોગ માટે Sahaay ને હોમ સ્ક્રીન પર ઉમેરો.',
 };
 
-const dictionaries: Record<Language, Partial<Labels>> = { en, hi, te, ta, kn, mr, bn, gu };
+const pa: Partial<Labels> = {
+  nav: 'ਤੁਹਾਡਾ ਮਾਰਗਦਰਸ਼ਕ', how: 'ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ', profile: 'ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ',
+  profileSub: 'ਕੁਝ ਵੇਰਵੇ ਸਹੀ ਦਰਵਾਜ਼ੇ ਖੋਲ੍ਹਦੇ ਹਨ।', optional: 'ਵਿਕਲਪਿਕ ਵੇਰਵੇ',
+  age: 'ਉਮਰ', state: 'ਰਾਜ / ਕੇਂਦਰ ਸ਼ਾਸਿਤ ਪ੍ਰਦੇਸ਼', district: 'ਜ਼ਿਲ੍ਹਾ', income: 'ਪਰਿਵਾਰ ਦੀ ਸਾਲਾਨਾ ਆਮਦਨ',
+  occupation: 'ਕਿੱਤਾ', gender: 'ਲਿੰਗ', category: 'ਸਮਾਜਿਕ ਵਰਗ', student: 'ਮੈਂ ਵਿਦਿਆਰਥੀ ਹਾਂ',
+  land: 'ਮੇਰੇ ਕੋਲ ਖੇਤੀਬਾੜੀ ਜ਼ਮੀਨ ਹੈ', disability: 'ਮੈਨੂੰ ਦਿਵਿਆਂਗਤਾ ਹੈ', find: 'ਮੇਰੀਆਂ ਸਕੀਮਾਂ ਲੱਭੋ',
+  reset: 'ਨਵੀਂ ਸ਼ੁਰੂਆਤ', eyebrow: 'ਥੋੜ੍ਹਾ ਮਾਰਗਦਰਸ਼ਨ। ਬਹੁਤ ਸਾਰੇ ਮੌਕੇ।', title: 'ਸਹੀ ਸਹਾਇਤਾ।', title2: 'ਤੁਹਾਡੇ ਹੋਰ ਨੇੜੇ।',
+  intro: 'ਆਪਣੇ ਅਤੇ ਆਪਣੇ ਪਰਿਵਾਰ ਲਈ ਸਰਕਾਰੀ ਸਕੀਮਾਂ ਲੱਭੋ। ਬਸ ਆਪਣੇ ਬਾਰੇ ਥੋੜ੍ਹਾ ਦੱਸੋ।',
+  welcome: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ Sahaay, ਤੁਹਾਡਾ ਭਲਾਈ ਮਾਰਗਦਰਸ਼ਕ ਹਾਂ।',
+  welcomeSub: 'ਆਓ ਤੁਹਾਡੇ ਲਈ ਸਹਾਇਤਾ ਲੱਭੀਏ। ਆਪਣੀ ਉਮਰ, ਰਿਹਾਇਸ਼ ਅਤੇ ਕਿੱਤੇ ਬਾਰੇ ਦੱਸੋ। ਅਸੀਂ ਇਕ-ਇਕ ਕਦਮ ਅੱਗੇ ਵਧਾਂਗੇ।',
+  ask: 'ਆਪਣੇ ਸ਼ਬਦਾਂ ਵਿੱਚ ਪੁੱਛੋ…', send: 'ਸੁਨੇਹਾ ਭੇਜੋ', results: 'ਤੁਹਾਡੇ ਮੌਕੇ',
+  resultsSub: 'ਸ਼ੁਰੂਆਤੀ ਮਾਰਗਦਰਸ਼ਨ, ਅੰਤਿਮ ਯੋਗਤਾ ਫੈਸਲਾ ਨਹੀਂ।', trace: 'ਗੱਲਬਾਤ ਦੇ ਪਿੱਛੇ', demo: 'ਡੈਮੋ ਮੋਡ', demoSub: 'ਕਿਸੇ API ਕੁੰਜੀ ਦੀ ਲੋੜ ਨਹੀਂ · ਨਿਯਮ-ਅਧਾਰਤ ਮਾਰਗਦਰਸ਼ਨ',
+  privacy: 'ਜਾਣਕਾਰੀ ਸਿਰਫ਼ ਇਸ ਸੈਸ਼ਨ ਵਿੱਚ ਰਹਿੰਦੀ ਹੈ। ਖਾਤੇ ਦੀ ਲੋੜ ਨਹੀਂ।',
+  warning: 'ਸਿਰਫ਼ ਸ਼ੁਰੂਆਤੀ ਮਾਰਗਦਰਸ਼ਨ। ਕੁਝ ਨਿਯਮ ਸ਼ਾਮਲ ਨਹੀਂ ਹਨ; ਯੋਗਤਾ ਅਤੇ ਨਵੀਨਤਮ ਜਾਣਕਾਰੀ ਅਧਿਕਾਰਤ ਪ੍ਰਦਾਤਾ ਤੋਂ ਜਾਂਚੋ।',
+  empty: 'ਤੁਹਾਡਾ ਅਗਲਾ ਮੌਕਾ ਇੱਥੋਂ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ।', emptySub: 'ਸੰਬੰਧਿਤ ਸਕੀਮਾਂ ਅਤੇ ਅਗਲੇ ਕਦਮ ਵੇਖਣ ਲਈ ਜਾਣਕਾਰੀ ਸਾਂਝੀ ਕਰੋ।',
+  prompts: ['ਮੈਂ ਪੰਜਾਬ ਦਾ 28 ਸਾਲ ਦਾ ਕਿਸਾਨ ਹਾਂ', 'ਮੈਂ ਵਿਦਿਆਰਥੀ ਹਾਂ, ਸਿੱਖਿਆ ਸਹਾਇਤਾ ਚਾਹੀਦੀ ਹੈ', 'ਸਿਹਤ ਬੀਮਾ ਲੱਭਣ ਵਿੱਚ ਮਦਦ ਕਰੋ'],
+  documents: 'ਲੋੜੀਂਦੇ ਦਸਤਾਵੇਜ਼', steps: 'ਅਰਜ਼ੀ ਕਿਵੇਂ ਦੇਣੀ ਹੈ', official: 'ਅਧਿਕਾਰਤ ਵੈੱਬਸਾਈਟ', verified: 'ਸਰੋਤ ਸਮੀਖਿਆ ਮਿਤੀ',
+  unverified: 'ਤਸਦੀਕ ਨਹੀਂ ਹੋਇਆ', likely: 'ਸੰਭਾਵੀ ਯੋਗਤਾ', eligible: 'ਮਾਡਲ ਨਿਯਮ ਪੂਰੇ', not_eligible: 'ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ',
+  missing: 'ਅਜੇ ਲੋੜੀਂਦੀ ਜਾਣਕਾਰੀ', any: 'ਚੁਣੋ', error: 'ਬੇਨਤੀ ਪੂਰੀ ਨਹੀਂ ਹੋਈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।', working: 'ਤੁਹਾਡੇ ਲਈ ਸਹਾਇਤਾ ਲੱਭ ਰਹੇ ਹਾਂ…',
+  detect: 'ਮੇਰਾ ਸਥਾਨ ਪਛਾਣੋ', detecting: 'ਤੁਹਾਡਾ ਖੇਤਰ ਪਛਾਣ ਰਹੇ ਹਾਂ…', locUse: 'ਇਹ ਖੇਤਰ ਵਰਤੋ',
+  locDenied: 'ਸਥਾਨ ਇਜਾਜ਼ਤ ਅਸਵੀਕਾਰ ਕੀਤੀ ਗਈ। ਤੁਸੀਂ ਰਾਜ ਖ਼ੁਦ ਚੁਣ ਸਕਦੇ ਹੋ।', locFailed: 'ਖੇਤਰ ਪਛਾਣਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਖ਼ੁਦ ਚੁਣੋ।',
+  locApprox: 'ਨੈੱਟਵਰਕ ਤੋਂ ਅੰਦਾਜ਼ਨ ਖੇਤਰ। ਤੁਸੀਂ ਇਸਨੂੰ ਬਦਲ ਸਕਦੇ ਹੋ।', locPrivacy: 'ਸਿਰਫ਼ ਇਸ ਡਿਵਾਈਸ ਤੇ ਖੇਤਰ ਭਰਨ ਲਈ। ਤੁਸੀਂ ਕਦੇ ਵੀ ਬਦਲ ਸਕਦੇ ਹੋ।',
+  locManual: 'ਖ਼ੁਦ ਚੁਣੋ', greeting: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ', name: 'ਤੁਹਾਡਾ ਨਾਮ', welcomeBack: 'ਜੀ ਆਇਆਂ ਨੂੰ', guest: 'ਮਹਿਮਾਨ',
+  guestNote: 'ਤੁਸੀਂ ਬਿਨਾਂ ਖਾਤੇ ਦੇ ਖੋਜ ਰਹੇ ਹੋ — ਜਾਣਕਾਰੀ ਸਿਰਫ਼ ਇਸ ਸੈਸ਼ਨ ਵਿੱਚ ਰਹੇਗੀ।',
+  signIn: 'ਸਾਈਨ ਇਨ ਕਰੋ', signUp: 'ਖਾਤਾ ਬਣਾਓ', signOut: 'ਸਾਈਨ ਆਊਟ', email: 'ਈਮੇਲ', password: 'ਪਾਸਵਰਡ',
+  continueGuest: 'ਬਿਨਾਂ ਖਾਤੇ ਜਾਰੀ ਰੱਖੋ', authTitleSignIn: 'ਜੀ ਆਇਆਂ ਨੂੰ', authTitleSignUp: 'ਆਪਣਾ ਖਾਤਾ ਬਣਾਓ',
+  authSub: 'ਇੱਕ ਖਾਤਾ ਤੁਹਾਡੀ ਪ੍ਰੋਫਾਈਲ, ਭਾਸ਼ਾ ਅਤੇ ਸੈਟਿੰਗਾਂ ਨੂੰ ਸਿੰਕ ਰੱਖਦਾ ਹੈ।',
+  authError: 'ਬੇਨਤੀ ਪੂਰੀ ਨਹੀਂ ਹੋਈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।',
+  synced: 'ਤੁਹਾਡੇ ਖਾਤੇ ਵਿੱਚ ਆਪਣੇ-ਆਪ ਸੰਭਾਲਿਆ ਗਿਆ', saving: 'ਸੰਭਾਲ ਰਿਹਾ ਹੈ…',
+  authTrust: 'ਪਾਸਵਰਡ ਹੈਸ਼ ਕੀਤੇ ਜਾਂਦੇ ਹਨ। ਗੱਲਬਾਤ ਕਦੇ ਸਟੋਰ ਨਹੀਂ ਹੁੰਦੀ।',
+  saved: 'ਸੰਭਾਲਿਆ ਗਿਆ', applied: 'ਅਰਜ਼ੀ ਦਿੱਤੀ ਗਈ', saveForLater: 'ਬਾਅਦ ਲਈ ਸੰਭਾਲੋ', markApplied: 'ਅਰਜ਼ੀ ਵਜੋਂ ਚਿੰਨ੍ਹਿਤ ਕਰੋ',
+  savedEmpty: 'ਅਜੇ ਕੁਝ ਨਹੀਂ ਸੰਭਾਲਿਆ। ਸੂਚੀ ਵਿੱਚੋਂ ਸਕੀਮਾਂ ਸੰਭਾਲੋ, ਉਹ ਇੱਥੇ ਦਿਖਣਗੀਆਂ।',
+  appliedEmpty: 'ਅਜੇ ਕੋਈ ਅਰਜ਼ੀ ਨਹੀਂ। ਅਰਜ਼ੀ ਦੇਣ ਤੋਂ ਬਾਅਦ ਸਕੀਮਾਂ ਨੂੰ ਚਿੰਨ੍ਹਿਤ ਕਰੋ।',
+  accountSettings: 'ਖਾਤਾ ਸੈਟਿੰਗਾਂ', displayName: 'ਦਿਖਾਉਣ ਵਾਲਾ ਨਾਮ', updateName: 'ਨਾਮ ਅੱਪਡੇਟ ਕਰੋ',
+  currentPassword: 'ਮੌਜੂਦਾ ਪਾਸਵਰਡ', newPassword: 'ਨਵਾਂ ਪਾਸਵਰਡ', updatePassword: 'ਪਾਸਵਰਡ ਅੱਪਡੇਟ ਕਰੋ',
+  passwordUpdated: 'ਪਾਸਵਰਡ ਅੱਪਡੇਟ ਹੋ ਗਿਆ', nameUpdated: 'ਨਾਮ ਅੱਪਡੇਟ ਹੋ ਗਿਆ',
+  install: 'ਐਪ ਇੰਸਟਾਲ ਕਰੋ', installHint: 'ਤੇਜ਼, ਆਫ਼ਲਾਈਨ ਪਹੁੰਚ ਲਈ Sahaay ਨੂੰ ਹੋਮ ਸਕ੍ਰੀਨ ਤੇ ਜੋੜੋ।', offlineReady: 'ਆਫ਼ਲਾਈਨ ਕੰਮ ਕਰਨ ਲਈ ਤਿਆਰ।',
+};
+
+const dictionaries: Record<Language, Partial<Labels>> = { en, hi, te, ta, kn, mr, bn, gu, pa };
 
 /** Merge the active language over the complete English base (English fallback). */
 export function getLabels(lang: Language): Labels {

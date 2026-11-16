@@ -1,7 +1,7 @@
 // Supported interface languages. Adding a language = add a code here, add a
 // dictionary in lib/i18n.ts (English fallback covers any missing key), and map
 // its TTS/STT locale in LANGUAGES. TTS/STT quality depends on device voices.
-export const LANGUAGE_CODES = ['en', 'hi', 'te', 'ta', 'kn', 'mr', 'bn', 'gu'] as const;
+export const LANGUAGE_CODES = ['en', 'hi', 'te', 'ta', 'kn', 'mr', 'bn', 'gu', 'pa'] as const;
 export type Language = (typeof LANGUAGE_CODES)[number];
 
 export interface LanguageMeta {

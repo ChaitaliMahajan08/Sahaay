@@ -105,6 +105,18 @@ const fieldLabels: Record<Language, Record<string, string>> = {
     ownsLand: 'ખેતીની જમીન',
     hasDisability: 'દિવ્યાંગતા',
   },
+  pa: {
+    age: 'ਉਮਰ',
+    state: 'ਰਾਜ',
+    district: 'ਜ਼ਿਲ੍ਹਾ',
+    annualIncome: 'ਸਾਲਾਨਾ ਆਮਦਨ',
+    occupation: 'ਕਿੱਤਾ',
+    gender: 'ਲਿੰਗ',
+    category: 'ਵਰਗ',
+    isStudent: 'ਵਿਦਿਆਰਥੀ',
+    ownsLand: 'ਖੇਤੀਬਾੜੀ ਜ਼ਮੀਨ',
+    hasDisability: 'ਦਿਵਿਆਂਗਤਾ',
+  },
 };
 
 const opSymbols: Record<string, string> = {
@@ -122,7 +134,8 @@ const valueLabels: Record<Language, Record<string, string>> = {
   ta: { true: 'ஆம்', false: 'இல்லை', female: 'பெண்', male: 'ஆண்', other: 'மற்றவை' },
   kn: { true: 'ಹೌದು', false: 'ಇಲ್ಲ', female: 'ಮಹಿಳೆ', male: 'ಪುರುಷ', other: 'ಇತರ' },
   bn: { true: 'হ্যাঁ', false: 'না', female: 'মহিলা', male: 'পুরুষ', other: 'অন্যান্য' },
-  gu: { true: 'હા', false: 'ના', female: 'મહિલા', male: 'પુરુષ', other: 'અન્ય' },
+  gu: { true: 'હા', false: 'ના', female: 'મહિલા', male: 'પુરુષ', other: 'અন્ય' },
+  pa: { true: 'ਹਾਂ', false: 'ਨਹੀਂ', female: 'ਔਰਤ', male: 'ਮਰਦ', other: 'ਹੋਰ' },
 };
 
 /** Format individual match reasons into the active language */
@@ -140,6 +153,7 @@ export function formatReason(reason: string, lang: Language): string {
       kn: 'ಭಾಗಶಃ ತಪಾಸಣೆ ಮಾತ್ರ: ಹೆಚ್ಚುವರಿ ಷರತ್ತುಗಳನ್ನು ಅಧಿಕೃತ ಮೂಲದಿಂದ ಪರಿಶೀಲಿಸಿ.',
       bn: 'কেবলমাত্র আংশিক যাচাই: অতিরিক্ত শর্তাবলী অফিসিয়াল পোর্টাল থেকে যাচাই করুন।',
       gu: 'માત્ર આંશિક તપાસ: વધારાની શરતો સત્તાવાર પોર્ટલ પરથી ચકાસો.',
+      pa: 'ਸਿਰਫ਼ ਅੰਸ਼ਕ ਜਾਂਚ: ਵਾਧੂ ਸ਼ਰਤਾਂ ਅਧਿਕਾਰਤ ਪੋਰਟਲ ਤੋਂ ਜਾਂਚੋ।',
     };
     return templates[lang] ?? templates.hi;
   }
@@ -155,6 +169,7 @@ export function formatReason(reason: string, lang: Language): string {
       kn: 'ನೀತಿಯನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಪರಿಶೀಲಿಸಲಾಗಿಲ್ಲ; ಅಧಿಕೃತ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ನಿಯಮಗಳನ್ನು ಖಚಿತಪಡಿಸಿ.',
       bn: 'নীতিটি পুরোপুরি যাচাই করা হয়নি; অফিসিয়াল সাইটে বর্তমান শর্তাবলী নিশ্চিত করুন।',
       gu: 'નીતિ સંપૂર્ણપણે ચકાસાયેલ નથી; સત્તાવાર પોર્ટલ પર વર્તમાન શરતો તપાસો.',
+      pa: 'ਨੀਤੀ ਪੂਰੀ ਤਰ੍ਹਾਂ ਤਸਦੀਕ ਨਹੀਂ ਹੋਈ; ਅਧਿਕਾਰਤ ਪੋਰਟਲ ਤੋਂ ਮੌਜੂਦਾ ਸ਼ਰਤਾਂ ਜਾਂਚੋ।',
     };
     return templates[lang] ?? templates.hi;
   }
@@ -177,6 +192,7 @@ export function formatReason(reason: string, lang: Language): string {
       kn: `ಮಾದರಿ ನಿಯಮ ಪೂರ್ಣ: ${fLabel} ${opSym} ${valLabel}`,
       bn: `নিয়ম পূরণ হয়েছে: ${fLabel} ${opSym} ${valLabel}`,
       gu: `નિયમ પૂર્ણ થયો: ${fLabel} ${opSym} ${valLabel}`,
+      pa: `ਨਿਯਮ ਪੂਰਾ ਹੋਇਆ: ${fLabel} ${opSym} ${valLabel}`,
     };
     return templates[lang] ?? templates.hi;
   }
@@ -199,6 +215,7 @@ export function formatReason(reason: string, lang: Language): string {
       kn: `ಮಾದರಿ ನಿಯಮ ಹೊಂದಿಲ್ಲ: ${fLabel} ${opSym} ${valLabel}`,
       bn: `নিয়ম পূরণ হয়নি: ${fLabel} ${opSym} ${valLabel}`,
       gu: `નિયમ પૂર્ણ થતો નથી: ${fLabel} ${opSym} ${valLabel}`,
+      pa: `ਨਿਯਮ ਪੂਰਾ ਨਹੀਂ ਹੋਇਆ: ${fLabel} ${opSym} ${valLabel}`,
     };
     return templates[lang] ?? templates.hi;
   }
@@ -217,6 +234,7 @@ export function formatReason(reason: string, lang: Language): string {
       kn: `ತಿಳಿಯದ ಮಾಹಿತಿ (${fLabel}): ಪರಿಶೀಲನೆಗೆ ಅಗತ್ಯ`,
       bn: `অজানা তথ্য (${fLabel}): যাচাই করতে প্রয়োজন`,
       gu: `અજાણી માહિતી (${fLabel}): ચકાસણી માટે જરૂરી`,
+      pa: `ਅਣਜਾਣ ਜਾਣਕਾਰੀ (${fLabel}): ਜਾਂਚ ਲਈ ਲੋੜੀਂਦੀ ਹੈ`,
     };
     return templates[lang] ?? templates.hi;
   }
@@ -506,6 +524,7 @@ const schemeLocales: Record<string, Partial<Record<string, SchemeTranslation>>> 
   bn: hiSchemes,
   ta: teSchemes,
   kn: teSchemes,
+  pa: hiSchemes, // Punjabi falls back to Hindi representations where appropriate
 };
 
 /** Get the localized version of a scheme, with fallback to English */

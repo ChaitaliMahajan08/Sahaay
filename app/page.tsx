@@ -344,7 +344,7 @@ export default function Home() {
     setInstallable(false);
   }
 
-  const complete = ['age', 'state', 'annualIncome', 'occupation'].filter(k => profile[k as keyof Profile] !== undefined && profile[k as keyof Profile] !== '').length;
+  const complete = ['age', 'gender', 'state', 'annualIncome', 'occupation', 'category', 'isStudent'].filter(k => profile[k as keyof Profile] !== undefined && profile[k as keyof Profile] !== '').length;
   const savedCount = Object.values(appliedList).filter(s => s === 'saved').length;
   const appliedCount = Object.values(appliedList).length - savedCount;
   const shown = matches.filter(m => filter === 'all' ? m.status !== 'not_eligible'
@@ -508,7 +508,7 @@ export default function Home() {
       <aside className="sidebar">
         <div className="nav-selected"><Icon name="chat"/>{t.nav}<span className="small-dot"/></div>
         <div className="profile-heading"><span className="overline">MADE FOR YOU</span><h2>{t.profile}</h2><p>{t.profileSub}</p></div>
-        <div className="completion"><div><span>{tri(language, 'The essentials', 'ज़रूरी जानकारी', 'ముఖ్య వివరాలు')}</span><span>{complete}/4</span></div><div className="progress-track"><span style={{ width: `${complete * 25}%` }}/></div></div>
+        <div className="completion"><div><span>{tri(language, 'The essentials', 'ज़रूरी जानकारी', 'ముఖ్య వివరాలు')}</span><span>{complete}/7</span></div><div className="progress-track"><span style={{ width: `${Math.round(complete * 100 / 7)}%` }}/></div></div>
 
         <div className={`account-strip ${authUser ? 'is-user' : 'is-guest'}`}>
           <span className="avatar big" aria-hidden="true">{authUser ? initials : '✳'}</span>
@@ -537,10 +537,26 @@ export default function Home() {
           <label>{t.district}<input disabled={loading} placeholder="e.g. Hyderabad" value={profile.district ?? ''} onChange={e => update('district', e.target.value || undefined)}/></label>
           <label>{t.income}<div className="currency-input"><span>₹</span><input disabled={loading} type="number" min="0" step="1" placeholder="e.g. 1,20,000" value={profile.annualIncome ?? ''} onChange={e => update('annualIncome', e.target.value === '' ? undefined : Number(e.target.value))}/><span>/ year</span></div></label>
           <label>{t.occupation}<input disabled={loading} placeholder={tri(language, 'e.g. Farmer, student, daily worker', 'जैसे किसान, विद्यार्थी', 'ఉదా. రైతు, విద్యార్థి')} value={profile.occupation ?? ''} onChange={e => update('occupation', e.target.value || undefined)}/></label>
-          <details className="optional"><summary>{t.optional}<span>+</span></summary>
-            <label>{t.category}<select disabled={loading} value={profile.category ?? ''} onChange={e => update('category', e.target.value || undefined)}><option value="">{t.any}</option>{['General', 'OBC', 'SC', 'ST', 'EWS'].map(c => <option key={c}>{c}</option>)}</select></label>
-            {(['isStudent', 'ownsLand', 'hasDisability'] as const).map(k => <label className="optional-select" key={k}>{fieldName(k)}<select disabled={loading} value={profile[k] === undefined ? '' : String(profile[k])} onChange={e => update(k, e.target.value === '' ? undefined : e.target.value === 'true')}><option value="">{t.any}</option><option value="true">{tri(language, 'Yes', 'हाँ', 'అవును')}</option><option value="false">{tri(language, 'No', 'नहीं', 'కాదు')}</option></select></label>)}
-          </details>
+          <label>{t.category}<select disabled={loading} value={profile.category ?? ''} onChange={e => update('category', e.target.value || undefined)}><option value="">{t.any}</option>{['General', 'OBC', 'SC', 'ST', 'EWS'].map(c => <option key={c}>{c}</option>)}</select></label>
+          <div className="flags-row">
+            <span className="flags-label">{t.optional}</span>
+            {(['isStudent', 'ownsLand', 'hasDisability'] as const).map(k => (
+              <button
+                type="button"
+                key={k}
+                disabled={loading}
+                className={`flag-pill ${profile[k] === true ? 'on' : profile[k] === false ? 'off' : ''}`}
+                onClick={() => {
+                  const cur = profile[k];
+                  update(k, cur === undefined ? true : cur === true ? false : undefined);
+                }}
+                title={profile[k] === undefined ? 'Click to set Yes' : profile[k] ? 'Yes — click to set No' : 'No — click to clear'}
+              >
+                {profile[k] === true ? '✓ ' : profile[k] === false ? '✗ ' : ''}
+                {fieldName(k)}
+              </button>
+            ))}
+          </div>
           <button className="primary profile-submit" disabled={loading} type="submit">{t.find}<Icon name="arrow" size={17}/></button>
         </form>
         <p className="privacy"><Icon name="lock" size={15}/><span>{t.privacy}</span></p>
