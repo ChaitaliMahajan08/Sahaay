@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ChatResponse, Language, LocationInfo, Match, Profile, ToolTrace } from '@/lib/contracts';
 import { getLabels, LANGUAGES } from '@/lib/i18n';
+import { formatReason, getLocalizedScheme } from '@/lib/scheme-i18n';
 import { detectLocation, STATES } from '@/lib/location';
 import { loadPrefs, savePrefs } from '@/lib/storage';
 
@@ -593,23 +594,26 @@ export default function Home() {
                   {authUser && <button className={filter === 'applied' ? 'active' : ''} onClick={() => setFilter('applied')}>{t.applied} ({appliedCount})</button>}
                 </div>
                 <div className="scheme-grid">
-                  {shown.map(m => (
+                  {shown.map(m => {
+                    const ls = getLocalizedScheme(m.scheme, language);
+                    return (
                     <article className="scheme-card" key={m.scheme.id}>
                       <div className="scheme-top"><span className={`status ${m.status}`}>{t[m.status]}</span><Icon name="leaf" size={18}/></div>
-                      <h3>{m.scheme.name}</h3>
-                      <p className="scheme-description">{m.scheme.description}</p>
-                      <div className="benefit"><Icon name="spark" size={17}/><p>{m.scheme.benefit}</p></div>
-                      <ul className="reasons">{m.reasons.map((r, i) => <li key={i}>{r}</li>)}</ul>
+                      <h3>{ls.name}</h3>
+                      <p className="scheme-description">{ls.description}</p>
+                      <div className="benefit"><Icon name="spark" size={17}/><p>{ls.benefit}</p></div>
+                      <ul className="reasons">{m.reasons.map((r, i) => <li key={i}>{formatReason(r, language)}</li>)}</ul>
                       {m.scheme.coverage === 'partial' && <p className="partial-note">{t.warning}</p>}
                       {m.missingFields.length > 0 && <p className="missing"><b>{t.missing}:</b> {m.missingFields.map(fieldName).join(', ')}</p>}
-                      <details className="scheme-details"><summary>{t.documents} &amp; {t.steps}<span>+</span></summary><h4>{t.documents}</h4><ul>{m.scheme.documents.map((d, i) => <li key={i}>{d}</li>)}</ul><h4>{t.steps}</h4><ol>{m.scheme.steps.map((s, i) => <li key={i}>{s}</li>)}</ol></details>
+                      <details className="scheme-details"><summary>{t.documents} &amp; {t.steps}<span>+</span></summary><h4>{t.documents}</h4><ul>{ls.documents.map((d, i) => <li key={i}>{d}</li>)}</ul><h4>{t.steps}</h4><ol>{ls.steps.map((s, i) => <li key={i}>{s}</li>)}</ol></details>
                       {authUser && <div className="scheme-actions">
                         <button type="button" className={`scheme-action ${appliedList[m.scheme.id] === 'saved' ? 'on' : ''}`} onClick={() => void toggleSchemeStatus(m.scheme.id, 'saved')} aria-pressed={appliedList[m.scheme.id] === 'saved'}><Icon name="bookmark" size={13}/>{appliedList[m.scheme.id] === 'saved' ? t.saved : t.saveForLater}</button>
                         <button type="button" className={`scheme-action ${appliedList[m.scheme.id] === 'applied' ? 'on applied' : ''}`} onClick={() => void toggleSchemeStatus(m.scheme.id, 'applied')} aria-pressed={appliedList[m.scheme.id] === 'applied'}><Icon name="check" size={13}/>{appliedList[m.scheme.id] === 'applied' ? t.applied : t.markApplied}</button>
                       </div>}
                       <div className="scheme-footer">{/^https?:\/\//i.test(m.scheme.source_url) && <a href={m.scheme.source_url} target="_blank" rel="noopener noreferrer">{t.official}<Icon name="external" size={14}/></a>}<span>{t.verified}: {m.scheme.last_verified || t.unverified}</span></div>
                     </article>
-                  ))}
+                    );
+                  })}
                 </div>
                 {shown.length === 0 && <div className="empty-results"><Icon name="leaf"/><p>{filter === 'saved' ? t.savedEmpty : filter === 'applied' ? t.appliedEmpty : tri(language, 'No schemes in this view. Review your details or try the other filter.', 'इस दृश्य में कोई योजना नहीं। अपनी जानकारी जाँचें या दूसरा फ़िल्टर आज़माएं।', 'ఈ వీక్షణలో పథకాలు లేవు. మీ వివరాలు సరిచూడండి లేదా వేరే ఫిల్టర్ ప్రయత్నించండి.')}</p></div>}
               </>}
